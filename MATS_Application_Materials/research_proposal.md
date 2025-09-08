@@ -63,11 +63,25 @@ Sparse Autoencoders (SAEs) are a cornerstone of modern mechanistic interpretabil
 - A final report summarizing the findings, including quantitative results (correlation scores) and qualitative analysis.
 
 ### Key Findings and Significance
-Our preliminary results demonstrate the potential of RelP-SAE:
+Our comprehensive validation reveals critical insights about attribution method reliability:
 
-- **Diverse Attribution Patterns:** The three methods identify substantially different features (no overlap in top 5), highlighting the fundamental differences between gradient-based and LRP-based approaches.
-- **Higher Attribution Magnitudes:** RelP-SAE produces attribution scores approximately 500x larger than Integrated Gradients, suggesting it captures more of the model's decision-making process.
-- **Novel Attribution Landscape:** The method reveals a completely different view of feature importance, potentially uncovering features that gradient-based methods miss due to saturation effects.
+#### Attribution Method Performance
+| Method | Attribution Scale | Correlation with Ground Truth | Feature Overlap |
+|--------|------------------|--------------------------------|-----------------|
+| **RelP-SAE (Novel)** | **~1.6** | **-0.02** (Weak) | **0% with ground truth** |
+| Gradient (Baseline) | ~0.3 | 0.25 (Moderate) | 10% with IG |
+| Integrated Gradients | ~0.003 | -0.05 (Weak) | 0% with RelP-SAE |
+
+#### Critical Discoveries
+- **Scale Discrepancy:** RelP-SAE produces attribution scores 500x larger than Integrated Gradients, indicating fundamentally different sensitivity to model behavior.
+- **Ground Truth Disconnect:** All methods show weak correlation with activation patching ground truth, suggesting systematic attribution method limitations.
+- **Method Divergence:** Zero overlap between RelP-SAE and ground truth top features, while gradient methods show moderate agreement.
+- **Validation Challenges:** The activation patching results show most features have negligible effects, complicating validation of attribution accuracy.
+
+#### Implications for Mechanistic Interpretability
+- **Attribution Method Bias:** Different attribution approaches capture fundamentally different aspects of model computation.
+- **Ground Truth Ambiguity:** Activation patching may not be the definitive ground truth for feature importance.
+- **Method Selection Critical:** The choice of attribution method dramatically affects interpretability conclusions.
 
 ### Alignment with Neel Nanda's Priorities
 This project directly aligns with several of Neel's stated research priorities:
