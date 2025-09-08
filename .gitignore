@@ -1,0 +1,45 @@
+# Model files (comment out if you want to include them)
+sae.pt
+*.pt
+*.pth
+*.pkl
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Jupyter notebooks (if generated)
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Environment files
+.env
+.venv/
+env/
+ENV/
+
+# Data files (if any)
+data/
+*.h5
+*.hdf5
