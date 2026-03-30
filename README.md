@@ -57,16 +57,28 @@ python run_attribution.py
 
 ```mermaid
 flowchart TD
-    A[Input prompt] --> B[Hook GPT-2 layer 6 residual stream]
-    B --> C[SAE encoder<br/>projects activations to sparse features]
-    C --> D[SAE decoder<br/>reconstructs residual stream]
-    D --> E[Model forward pass to logits]
-    E --> F[Enable LRP rules in TransformerLens]
-    F --> G[Backprop relevance to SAE features<br/>(RelP-SAE attribution)]
-    G --> H[Rank top features by relevance]
-    H --> I{Validate?}
-    I -- Activation patching --> J[Zero/patch feature and rerun<br/>measure logit diff toward clean output]
-    I -- Skip --> K[Report feature importances]
+    A[Input prompt]
+    B[Hook GPT-2 layer 6 residual stream]
+    C[SAE encoder<br/>projects activations to sparse features]
+    D[SAE decoder<br/>reconstructs residual stream]
+    E[Model forward pass to logits]
+    F[Enable LRP rules in TransformerLens]
+    G[Backprop relevance to SAE features<br/>(RelP-SAE attribution)]
+    H[Rank top features by relevance]
+    I{Validate?}
+    J[Zero/patch feature and rerun<br/>measure logit diff toward clean output]
+    K[Report feature importances]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I -->|Activation patching| J
+    I -->|Skip| K
     J --> K
 ```
 
