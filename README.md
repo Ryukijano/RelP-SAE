@@ -55,19 +55,28 @@ python run_attribution.py
 
 ## RelP-SAE Attribution Flow
 
+```mermaid
 flowchart TD
-    A[Input prompt]
-    B[Hook GPT-2 layer 6 residual stream]
-    ...
-    I{Validate?}
-    J[Zero/patch feature and rerun<br/>measure logit diff toward clean output]
-    K[Report feature importances]
+    subgraph FWD[Forward Pass + SAE Interface]
+        A["Input prompt"] --> B["Hook GPT-2 layer 6 residual stream"]
+        B --> C["SAE encoder\nprojects activations to sparse features"]
+        C --> D["SAE decoder\nreconstructs residual stream"]
+        D --> E["Model forward pass to logits"]
+    end
 
-    A --> B
-    ...
-    I -->|Activation patching| J
-    I -->|Skip| K
-    J --> K
+    subgraph REL[Relevance Propagation]
+        E --> F["Enable LRP rules in TransformerLens"]
+        F --> G["Backprop relevance to SAE features\n(RelP-SAE attribution)"]
+        G --> H["Rank top features by relevance"]
+    end
+
+    subgraph VAL[Validation + Reporting]
+        H --> I{"Validate with patching?"}
+        I -->|Activation patching| J["Zero/patch feature and rerun\nmeasure logit diff toward clean output"]
+        I -->|Skip| K["Report feature importances"]
+        J --> K
+    end
+```
 
 ## Detailed Usage
 
