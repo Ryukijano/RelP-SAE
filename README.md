@@ -53,20 +53,21 @@ python verify_setup.py
 python run_attribution.py
 ```
 
-## Workflow Overview
+## RelP-SAE Attribution Flow
 
 ```mermaid
 flowchart TD
-    A[Clone repository] --> B[Create & activate conda env]
-    B --> C[Install Python dependencies<br/>pip install -r requirements.txt]
-    C --> D[Install RelP TransformerLens fork<br/>pip install -e .]
-    D --> E[Verify setup<br/>python verify_setup.py]
-    E --> F{Need a new SAE?}
-    F -- Yes --> G[Train SAE<br/>python train_sae.py]
-    F -- No --> H[Use provided sae.pt]
-    G --> H
-    H --> I[Run attribution<br/>python run_attribution.py]
-    I --> J[Inspect attribution outputs]
+    A[Input prompt] --> B[Hook GPT-2 layer 6 residual stream]
+    B --> C[SAE encoder<br/>projects activations to sparse features]
+    C --> D[SAE decoder<br/>reconstructs residual stream]
+    D --> E[Model forward pass to logits]
+    E --> F[Enable LRP rules in TransformerLens]
+    F --> G[Backprop relevance to SAE features<br/>(RelP-SAE attribution)]
+    G --> H[Rank top features by relevance]
+    H --> I{Validate?}
+    I -- Activation patching --> J[Zero/patch feature and rerun<br/>measure logit diff toward clean output]
+    I -- Skip --> K[Report feature importances]
+    J --> K
 ```
 
 ## Detailed Usage
