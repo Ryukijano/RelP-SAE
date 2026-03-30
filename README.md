@@ -137,7 +137,7 @@ If you use this code in your research, please cite:
 ```bibtex
 @misc{relp_sae_2025,
   title={RelP-SAE: High-Fidelity Causal Attribution for Sparse Autoencoder Features},
-  author={Your Name},
+  author={Gyanateet Dutta},
   year={2025},
   note={MATS Research Application}
 }
