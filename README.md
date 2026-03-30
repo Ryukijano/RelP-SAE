@@ -53,6 +53,23 @@ python verify_setup.py
 python run_attribution.py
 ```
 
+## RelP-SAE Attribution Flow
+
+```mermaid
+flowchart TD
+    A[Input prompt] --> B[Hook GPT-2 layer 6 residual stream]
+    B --> C[SAE encoder<br/>projects activations to sparse features]
+    C --> D[SAE decoder<br/>reconstructs residual stream]
+    D --> E[Model forward pass to logits]
+    E --> F[Enable LRP rules in TransformerLens]
+    F --> G[Backprop relevance to SAE features<br/>(RelP-SAE attribution)]
+    G --> H[Rank top features by relevance]
+    H --> I{Validate?}
+    I -- Activation patching --> J[Zero/patch feature and rerun<br/>measure logit diff toward clean output]
+    I -- Skip --> K[Report feature importances]
+    J --> K
+```
+
 ## Detailed Usage
 
 ### Training a New SAE (Optional)
