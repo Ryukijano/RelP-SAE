@@ -53,6 +53,22 @@ python verify_setup.py
 python run_attribution.py
 ```
 
+## Workflow Overview
+
+```mermaid
+flowchart TD
+    A[Clone repository] --> B[Create & activate conda env]
+    B --> C[Install Python dependencies<br/>pip install -r requirements.txt]
+    C --> D[Install RelP TransformerLens fork<br/>pip install -e .]
+    D --> E[Verify setup<br/>python verify_setup.py]
+    E --> F{Need a new SAE?}
+    F -- Yes --> G[Train SAE<br/>python train_sae.py]
+    F -- No --> H[Use provided sae.pt]
+    G --> H
+    H --> I[Run attribution<br/>python run_attribution.py]
+    I --> J[Inspect attribution outputs]
+```
+
 ## Detailed Usage
 
 ### Training a New SAE (Optional)
