@@ -178,4 +178,4 @@ This project is released under the MIT License. See LICENSE for details.
 ## Acknowledgments
 - Built on [TransformerLens](https://github.com/TransformerLensOrg/TransformerLens)
 - Uses the [RelP](https://github.com/FarnoushRJ/RelP) fork for LRP functionality
-- Inspired by the mechanistic interpretability research of Neel Nanda and collaborators
+- Inspired by the mechanistic interpretability research of Neel Nanda and collaborators.
